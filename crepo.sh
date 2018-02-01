@@ -15,14 +15,18 @@ while getopts 'pd:s' flag; do
   esac
 done
 
-read -r -p "Enter host username:" username
+read -r -p "Enter host username: " username
+read -rs -p "Enter host password for user '$username': " password
 
-curl -u "$username" https://api.github.com/user/repos -d '{"name":"'$name'", "private":"'$private'", "description":"'$description'"}'
+curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$name'", "private":"'$private'", "description":"'$description'"}'
+
 
 git remote add origin https://github.com/$username/$name.git
 
 if $SSH ; then
 	git remote set-url origin git@github.com:$username/$name.git
+	git push origin master
+else
+	expect -f expected.expect $username $password
 fi
 
-git push origin master
