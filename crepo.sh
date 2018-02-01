@@ -21,7 +21,7 @@ curl -u "$username" https://api.github.com/user/repos -d '{"name":"'$name'", "pr
 
 git remote add origin https://github.com/$username/$name.git
 
-if [ SSH ]; then
+if $SSH ; then
 	git remote set-url origin git@github.com:$username/$name.git
 fi
 
