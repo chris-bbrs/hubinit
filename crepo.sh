@@ -5,9 +5,9 @@ name=${PWD##*/}
 private='false'
 description=''
 
-while getopts 'vd:' flag; do
+while getopts 'pd:' flag; do
   case "${flag}" in
-    v) private='true' ;;
+    p) private='true' ;;
 	d) description="${OPTARG}";;
     *) error "Unexpected option ${flag}" ;;
   esac
