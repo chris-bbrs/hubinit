@@ -4,6 +4,7 @@ name=${PWD##*/}
 
 private='false'
 description=''
+SSH='false'
 
 while getopts 'pd:s' flag; do
   case "${flag}" in
