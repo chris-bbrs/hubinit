@@ -11,12 +11,13 @@ spawn git push $remote_name master
 expect "Username"
 send $username\r
 
-if [ token_key != '' ]; then
-	expect "token"
-	send $token_key\r
-else
-	expect "Password"
-	send $password\r
-fi
+expect {
+    "token" {
+        send $token_key\r
+    }
+    "Password" {
+    	send $password\r
+    }
+}
 
 interact

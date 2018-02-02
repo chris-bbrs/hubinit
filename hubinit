@@ -6,7 +6,6 @@ repo=${PWD##*/}
 description=''
 SSH='false'
 token='false'
-token_key=''
 remote_name='origin'
 
 while getopts 'd:sn:r:t' flag; do
