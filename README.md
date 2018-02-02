@@ -28,8 +28,8 @@ cd ~/myProject
 bash ~/hubinit
 ```
 Options:
-  -d Add description  
-  -n Repository name, default=current folder  
-  -r remote name, default=origin  
-  -t Token authentication  
-  -s In case of SSH (currently doesn't work)  
+  -d Add description
+  -n Repository name, default=current folder
+  -r remote name, default=origin
+  -t Token authentication
+  -s In case of SSH (currently doesn't work)
