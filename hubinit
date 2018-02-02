@@ -24,10 +24,10 @@ read -r -p "Enter host username: " username
 
 if $token; then
 	read -rs -p "Enter token for user '$username': " token_key
-	curl -u "$username:$token_key" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"false", "description":"'$description'"}'
+	curl -u "$username:$token_key" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"true", "description":"'$description'"}'
 else
 	read -rs -p "Enter password for user '$username': " password
-	curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"false", "description":"'$description'"}'
+	curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"true", "description":"'$description'"}'
 fi
 
 
