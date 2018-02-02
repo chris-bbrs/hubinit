@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 name=${PWD##*/}
 private='false'
 description=''
@@ -19,7 +21,6 @@ read -r -p "Enter host username: " username
 read -rs -p "Enter host password for user '$username': " password
 
 curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$name'", "private":"'$private'", "description":"'$description'"}'
-
 
 git remote add origin https://github.com/$username/$name.git
 
