@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -e
+
+repo=${PWD##*/}
+description=''
+SSH='false'
+token='false'
+token_key=''
+remote_name='origin'
+
+while getopts 'd:n:r:ts' flag; do
+  case "${flag}" in
+	d) description="${OPTARG}";;
+	n) repo="${OPTARG}";;
+	r) remote_name="${OPTARG}";;
+	t) token='true';;
+	s) SSH='true';;
+    *) error "Unexpected option -${flag}";;
+  esac
+done
+
+read -r -p "Enter host username: " username
+
+if $token; then
+	read -rs -p "Enter token for user '$username': " token_key
+	curl -u "$username:$token_key" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"true", "description":"'$description'"}'
+else
+	read -rs -p "Enter password for user '$username': " password
+	curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"true", "description":"'$description'"}'
+fi
+
+
+git remote add $remote_name https://github.com/$username/$repo.git
+
+if $SSH ; then
+	git remote set-url $remote_name git@github.com:$username/$repo.git
+	git push $remote_name master
+else
+	expect -f creds.expect $username $password $remote_name $token_key
+fi
+
