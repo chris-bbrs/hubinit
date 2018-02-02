@@ -7,15 +7,25 @@ private='false'
 description=''
 SSH='false'
 remote_name='origin'
+create='false'
 
-while getopts 'pd:sn:r:' flag; do
+while getopts 'pd:sn:r:c' flag; do
   case "${flag}" in
     p) private='true';;
 	d) description="${OPTARG}";;
-	s) SSH='true';;
 	n) repo="${OPTARG}";;
-	r) remote_name="${OPTARG}";;
-    *) error "Unexpected option ${flag}";;
+	c) create='true';;
+	s)  if $create; then
+			printf "Unexpected option -${flag}\n"
+			exit 1;
+		fi
+	   SSH='true';;
+	r)  if $create; then
+			printf "Unexpected option -${flag}\n"
+			exit 1;
+		fi
+	   remote_name="${OPTARG}";;
+    *) exit 1 ;;
   esac
 done
 
@@ -23,6 +33,10 @@ read -r -p "Enter host username: " username
 read -rs -p "Enter host password for user '$username': " password
 
 curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"'$private'", "description":"'$description'"}'
+
+if [ create == true ]; then
+	exit 0
+fi
 
 git remote add $remote_name https://github.com/$username/$repo.git
 
