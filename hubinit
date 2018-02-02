@@ -6,15 +6,16 @@ repo=${PWD##*/}
 description=''
 SSH='false'
 token='false'
+token_key=''
 remote_name='origin'
 
-while getopts 'd:sn:r:t' flag; do
+while getopts 'd:n:r:ts' flag; do
   case "${flag}" in
 	d) description="${OPTARG}";;
-	s) SSH='true';;
-	t) token='true';;
 	n) repo="${OPTARG}";;
 	r) remote_name="${OPTARG}";;
+	t) token='true';;
+	s) SSH='true';;
     *) error "Unexpected option -${flag}";;
   esac
 done
