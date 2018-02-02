@@ -5,12 +5,14 @@ set -e
 repo=${PWD##*/}
 description=''
 SSH='false'
+token='false'
 remote_name='origin'
 
-while getopts 'd:sn:r:' flag; do
+while getopts 'd:sn:r:t' flag; do
   case "${flag}" in
 	d) description="${OPTARG}";;
 	s) SSH='true';;
+	t) token='true';;
 	n) repo="${OPTARG}";;
 	r) remote_name="${OPTARG}";;
     *) error "Unexpected option ${flag}";;
@@ -18,9 +20,15 @@ while getopts 'd:sn:r:' flag; do
 done
 
 read -r -p "Enter host username: " username
-read -rs -p "Enter host password for user '$username': " password
 
-curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$repo'", "description":"'$description'"}'
+if $token; then
+	read -rs -p "Enter token for user '$username': " token_key
+	curl -u "$username:$token_key" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"false", "description":"'$description'"}'
+else
+	read -rs -p "Enter password for user '$username': " password
+	curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"false", "description":"'$description'"}'
+fi
+
 
 git remote add $remote_name https://github.com/$username/$repo.git
 
