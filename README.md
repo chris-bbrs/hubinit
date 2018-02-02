@@ -27,7 +27,7 @@ e.g.
 cd ~/myProject
 bash ~/hubinit
 ```
-Options:
+Options:  
   -d Add description  
   -n Repository name, default=current folder  
   -r remote name, default=origin  
