@@ -1,9 +1,10 @@
 #!/usr/bin/expect -f
 
-set username   [lindex $argv 0];
+set username [lindex $argv 0]
 set password [lindex $argv 1]
+set remote_name [lindex $argv 2]
 
-spawn git push origin master
+spawn git push $remote_name master
 
 expect "Username"
 send $username\r
