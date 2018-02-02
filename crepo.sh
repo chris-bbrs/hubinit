@@ -1,16 +1,16 @@
 #!/bin/bash
 
 name=${PWD##*/}
-
 private='false'
 description=''
 SSH='false'
 
-while getopts 'pd:s' flag; do
+while getopts 'pd:sn:' flag; do
   case "${flag}" in
     p) private='true' ;;
 	d) description="${OPTARG}";;
 	s) SSH='true' ;;
+	n) name="${OPTARG}";;
     *) error "Unexpected option ${flag}" ;;
   esac
 done
