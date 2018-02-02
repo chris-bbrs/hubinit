@@ -3,14 +3,12 @@
 set -e
 
 repo=${PWD##*/}
-private='false'
 description=''
 SSH='false'
 remote_name='origin'
 
-while getopts 'pd:sn:r:' flag; do
+while getopts 'd:sn:r:' flag; do
   case "${flag}" in
-    p) private='true';;
 	d) description="${OPTARG}";;
 	s) SSH='true';;
 	n) repo="${OPTARG}";;
@@ -22,7 +20,7 @@ done
 read -r -p "Enter host username: " username
 read -rs -p "Enter host password for user '$username': " password
 
-curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$repo'", "private":"'$private'", "description":"'$description'"}'
+curl -u "$username:$password" https://api.github.com/user/repos -d '{"name":"'$repo'", "description":"'$description'"}'
 
 git remote add $remote_name https://github.com/$username/$repo.git
 
@@ -30,6 +28,6 @@ if $SSH ; then
 	git remote set-url $remote_name git@github.com:$username/$repo.git
 	git push $remote_name master
 else
-	expect -f expected.expect $username $password $remote_name
+	expect -f creds.expect $username $password $remote_name
 fi
 
