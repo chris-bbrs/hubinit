@@ -12,7 +12,7 @@ while getopts 'pd:sn:r:' flag; do
   case "${flag}" in
     p) private='true';;
 	d) description="${OPTARG}";;
-	s) SSH='true'git;;
+	s) SSH='true';;
 	n) repo="${OPTARG}";;
 	r) remote_name="${OPTARG}";;
     *) error "Unexpected option ${flag}";;
