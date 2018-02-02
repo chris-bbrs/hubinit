@@ -6,6 +6,7 @@ repo=${PWD##*/}
 description=''
 SSH='false'
 token='false'
+token_key=''
 remote_name='origin'
 
 while getopts 'd:sn:r:t' flag; do
@@ -15,7 +16,7 @@ while getopts 'd:sn:r:t' flag; do
 	t) token='true';;
 	n) repo="${OPTARG}";;
 	r) remote_name="${OPTARG}";;
-    *) error "Unexpected option ${flag}";;
+    *) error "Unexpected option -${flag}";;
   esac
 done
 
@@ -36,6 +37,6 @@ if $SSH ; then
 	git remote set-url $remote_name git@github.com:$username/$repo.git
 	git push $remote_name master
 else
-	expect -f creds.expect $username $password $remote_name
+	expect -f creds.expect $username $password $remote_name $token_key
 fi
 
