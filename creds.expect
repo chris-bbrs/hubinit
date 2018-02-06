@@ -3,7 +3,6 @@
 set username [lindex $argv 0]
 set password [lindex $argv 1]
 set remote_name [lindex $argv 2]
-set token_key [lindex $argv 3]
 
 spawn git push $remote_name master
 
@@ -11,16 +10,7 @@ set timeout 3
 expect "Username"
 send $username\r
 
-expect {
-    "token" {
-        send $token_key\r
-    }
-    "Password" {
-    	send $password\r
-    }
-    timeout {
-    	puts "\r"; exit 1
-    }
-}
+expect "Password"
+send $password\r
 
 interact

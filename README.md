@@ -4,7 +4,7 @@ A simple shell script to automate the procedure of manually creating a github re
 
 ## Running
 
-You need git and expect
+You need [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [expect](http://expect.sourceforge.net/)
 
 Navigate to script's directory and execute with:
 ```bash
@@ -29,7 +29,6 @@ bash ~/hubinit
 ```
 Options:  
   -d Add description  
-  -n Repository name, default=current folder  
-  -r remote name, default=origin  
-  -t Token authentication  
+  -n Repository name, default = current folder  
+  -r remote name, default = origin  
   -s In case of SSH (currently doesn't work)  
