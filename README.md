@@ -27,8 +27,12 @@ e.g.
 cd ~/myProject
 bash ~/hubinit
 ```
+<pre>
 Options:  
-  -d Add description  
-  -n Repository name, default = current folder  
-  -r remote name, default = origin  
-  -s In case of SSH (currently doesn't work)  
+  -d 'description'          Add repository description  
+  -n 'repository_name       Repository name, default = current folder  
+  -r 'remote_name'          Remote name, default = origin  
+  -s                        In case of SSH (currently doesn't work)  
+  -i 'commit_description'   Initialize current folder, add everything and commit 
+</pre>
+By running hubinit without any flags you need an already initialized local repository you are working with. Then hubinit creates a github repository with current folder's name and pushes everything to an origin remote linked to this repository.

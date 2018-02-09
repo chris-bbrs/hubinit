@@ -20,8 +20,9 @@ done
 if [ -z $(which git) ]; then
 	printf "The program 'git' is currently not installed.\n"
 	exit 1
-elif [ $(git remote) == $remote_name ]; then
+elif [ "$(git remote)" == "$remote_name" ]; then
 	printf "fatal: remote $remote_name already exists.\n"
+	exit 1
 fi
 
 if [ -z $(which expect) ]; then
