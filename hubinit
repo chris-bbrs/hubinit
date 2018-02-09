@@ -4,27 +4,35 @@ repo=${PWD##*/}
 description=''
 SSH='false'
 remote_name='origin'
+initialize=''
 
-while getopts 'd:n:r:s' flag; do
+while getopts 'd:n:r:si:' flag; do
   case "${flag}" in
 	d) description="${OPTARG}";;
 	n) repo="${OPTARG}";;
 	r) remote_name="${OPTARG}";;
 	s) SSH='true';;
+	i) initialize="${OPTARG}";;
     *) error "Unexpected option -${flag}";;
   esac
 done
 
-if [ -z $(which gedit) ]; then
-	printf 'The program "git" is currently not installed.\n'
+if [ -z $(which git) ]; then
+	printf "The program 'git' is currently not installed.\n"
 	exit 1
 elif [ $(git remote) == $remote_name ]; then
 	printf "fatal: remote $remote_name already exists.\n"
 fi
 
 if [ -z $(which expect) ]; then
-	printf 'The program "expect" is currently not installed.\n'
+	printf "The program 'expect' is currently not installed.\n"
 	exit 1
+fi
+
+if [ "$initialize" ]; then
+	git init
+	git add *
+	git commit -m "$initialize"
 fi
 
 read -r -p "Enter host username: " username
@@ -40,4 +48,3 @@ if $SSH ; then
 else
 	expect -f creds.expect $username $password $remote_name
 fi
-
