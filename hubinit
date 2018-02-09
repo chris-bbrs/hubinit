@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 repo=${PWD##*/}
 description=''
 SSH='false'
@@ -16,6 +14,18 @@ while getopts 'd:n:r:s' flag; do
     *) error "Unexpected option -${flag}";;
   esac
 done
+
+if [ -z $(which gedit) ]; then
+	printf 'The program "git" is currently not installed.\n'
+	exit 1
+elif [ $(git remote) == $remote_name ]; then
+	printf "fatal: remote $remote_name already exists.\n"
+fi
+
+if [ -z $(which expect) ]; then
+	printf 'The program "expect" is currently not installed.\n'
+	exit 1
+fi
 
 read -r -p "Enter host username: " username
 
