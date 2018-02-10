@@ -28,12 +28,18 @@ fi
 if [ -z $(which expect) ]; then
 	printf "The program 'expect' is currently not installed.\n"
 	exit 1
+elif [ ! -e creds.expect ]; then
+	printf "couldn't read file "creds.expect": no such file or directory\n"
+	exit 1
 fi
 
 if [ "$initialize" ]; then
 	git init
 	git add *
 	git commit -m "$initialize"
+elif [ ! -d .git ]; then
+	printf "fatal: Not a git repository (or any of the parent directories): .git\n"
+	exit 1
 fi
 
 read -r -p "Enter host username: " username

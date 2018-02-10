@@ -6,15 +6,15 @@ A simple shell script to automate the procedure of manually creating a github re
 
 You need [git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) and [expect](http://expect.sourceforge.net/)
 
-Navigate to script's directory and execute with:
+Find script's directory and execute it:
 ```bash
-bash hubinit
+someplace/hubinit
 ```
-Or use a folder in PATH
+Or use a folder in PATH like /usr/local/bin and move the files there
 ```bash
 $PATH
 ```
-and execute it as a command
+so that you can execute it as a command.
 ```bash
 hubinit
 ```
@@ -24,8 +24,8 @@ hubinit
 Navigate to your local repository and run the script
 e.g.
 ```bash
-cd ~/myProject
-bash ~/hubinit
+cd /myProject
+someplace/hubinit
 ```
 <pre>
 Options:  
