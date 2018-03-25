@@ -28,7 +28,7 @@ fi
 if [ -z $(which expect) ]; then
 	printf "The program 'expect' is currently not installed.\n"
 	exit 1
-elif [ ! -e creds.expect ]; then
+elif [ ! -e "$(dirname "$(readlink -f "$0")")"/creds.expect ]; then
 	printf "couldn't read file "creds.expect": no such file or directory\n"
 	exit 1
 fi
@@ -53,5 +53,5 @@ if $SSH ; then
 	git remote set-url $remote_name git@github.com:$username/$repo.git
 	git push $remote_name master
 else
-	expect -f creds.expect $username $password $remote_name
+	expect -f "$(dirname "$(readlink -f "$0")")"/creds.expect $username $password $remote_name
 fi
